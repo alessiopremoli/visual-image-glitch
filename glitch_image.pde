@@ -2,6 +2,7 @@ PImage img;
 boolean log = false;
 float bv, dv = 0.0;
 int m = 0;
+int loadedImage = 0;
 
 WhiteNoise noise;
 LowPass lowPass;
@@ -46,9 +47,8 @@ void setup() {
 }
 
 void draw() {
-  
   if (startData == lastData) {
-      glitch();
+      saveFrame("output/image-"+str(loadedImage)+"-"+str(2000 - delay) + "-######.png");
       delay(2000);
       loadNextImage();
       startData = 0;
@@ -57,7 +57,7 @@ void draw() {
       fv = 100.0;
       nextfv = 100.0;
       ASDFreset();
-      println(millis() / 1000);
+      
   }
 
   soundManipolation(); 
@@ -69,6 +69,7 @@ void draw() {
 void loadNextImage() {
   img = loadImage("forest_2.jpg");
   image(img, 0, 0);
+  loadedImage++;
 }
 
 void glitch() {
@@ -86,7 +87,8 @@ void glitch() {
     
     ASDFPixelSort(bv);
     desaturate(-dv);
-    addText(years.get(startData).toString()); 
+    addText(years.get(startData).toString());
+    saveFrame("output/image-"+str(loadedImage)+"-"+str(delay) + "-######.png");
     delay(delay);
     
     /*println(years.get(startData).toString() + ": New bv: " + bv + " for value: ", value);
