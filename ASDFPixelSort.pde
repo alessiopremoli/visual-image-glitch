@@ -25,6 +25,11 @@ int column = 0;
 
 boolean saved = false;
 
+void ASDFreset() {
+  row = 0;
+  column = 0;
+}
+
 void ASDFPixelSort(float bv) {
   blackValue = bv;
   // println("Sorting", bv, blackValue);
@@ -155,7 +160,7 @@ void sortColumn() {
 // black x
 int getFirstNotBlackX(int x, int y) {
   
-  while(img.pixels[x + y * img.width] < blackValue) {
+  while(img.pixels[min(x + y * img.width, img.width * img.height -1)] < blackValue) {
     x++;
     if(x >= img.width) 
       return -1;
@@ -167,7 +172,7 @@ int getFirstNotBlackX(int x, int y) {
 int getNextBlackX(int x, int y) {
   x++;
   
-  while(img.pixels[x + y * img.width] > blackValue) {
+  while(img.pixels[min(x + y * img.width, img.width * img.height -1)] > blackValue) {
     x++;
     if(x >= img.width) 
       return img.width;
@@ -226,7 +231,7 @@ int getNextWhiteX(int x, int y) {
 int getFirstNotBlackY(int x, int y) {
 
   if(y < img.height) {
-    while(img.pixels[x + y * img.width] < blackValue) {
+    while(img.pixels[min(x + y * img.width, img.width * img.height -1)] < blackValue) {
       y++;
       if(y >= img.height)
         return -1;
@@ -240,7 +245,7 @@ int getNextBlackY(int x, int y) {
   y++;
 
   if(y < img.height) {
-    while(img.pixels[x + y * img.width] > blackValue) {
+    while(img.pixels[min(x + y * img.width, img.width * img.height -1)] > blackValue) {
       y++;
       if(y >= img.height)
         return img.height;

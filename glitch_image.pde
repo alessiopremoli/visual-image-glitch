@@ -1,6 +1,12 @@
 PImage img;
 boolean log = false;
 float bv, dv = 0.0;
+int m = 0;
+
+WhiteNoise noise;
+LowPass lowPass;
+float fv = 100;
+float nextfv = 100;
 
 float maxValue = Float.MIN_VALUE;
 float minValue = Float.MAX_VALUE;
@@ -10,7 +16,8 @@ boolean finished = false;
 FloatList dataPerYear = new FloatList();
 StringList years = new StringList();
 int startData, lastData = 0;
-int delay;
+int delay = 200;
+int startMillis = 0;
 
 void setup() {
   background(255);
@@ -29,23 +36,74 @@ void setup() {
     years.append(year);
     lastData++;
   }
+  
+  noise = new WhiteNoise(this);
+  lowPass = new LowPass(this);
+    
+  noise.play(0.5);
+  lowPass.process(noise);
+  lowPass.freq(fv);
 }
 
 void draw() {
+  
+  if (startData == lastData) {
+      glitch();
+      delay(2000);
+      loadNextImage();
+      startData = 0;
+      bv = 0;
+      dv = 0;
+      fv = 100.0;
+      nextfv = 100.0;
+      ASDFreset();
+      println(millis() / 1000);
+  }
+
+  soundManipolation(); 
+  glitch();
+
+  
+}
+
+void loadNextImage() {
+  img = loadImage("forest_2.jpg");
+  image(img, 0, 0);
+}
+
+void glitch() {
+  
   if(startData < lastData) {
-    delay(2000);
+
     float value = dataPerYear.get(startData);
     bv = map(value, minValue, maxValue, maxBv, minBv);
     dv = map(value, minValue, maxValue, 0, 255);
+    fv = map(value, minValue, maxValue, 100, MAX_FREQ);
+    
+    int nextIdx = min(startData + 1, lastData - 1);
+    nextfv = map(dataPerYear.get(nextIdx), minValue, maxValue, 100, MAX_FREQ);
+    
     
     ASDFPixelSort(bv);
     desaturate(-dv);
     addText(years.get(startData).toString()); 
+    delay(delay);
     
-    println("New bv: " + bv + " for value: ", value);
+    /*println(years.get(startData).toString() + ": New bv: " + bv + " for value: ", value);
     println("Desaturating: -" + dv);
+    println("Freq: ", fv, nextfv);*/
     startData++;
-  } 
+    //println(startData);
+  }
+}
+
+void soundManipolation() {
+  if(abs(fv - nextfv) > 0) {
+    fv += (nextfv - fv) / 40;
+    lowPass.freq(fv);
+  } else {
+    lowPass.freq(nextfv);
+  }
 }
 
 void loadData() {
@@ -67,7 +125,6 @@ void getMaxMinFromData() {
 void addText(String text) {
   fill(130);
   textSize(100);
-  print(text);
   text(text, width - 256 - 32, height - 32);
 }
 

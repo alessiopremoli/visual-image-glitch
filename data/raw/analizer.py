@@ -1,6 +1,8 @@
 import pandas as pd
 
-# annual-co2-emissions-per-country
+# annual-co2-emissions-per-country => https://ourworldindata.org/explorers/co2?tab=chart&country=~World&Gas%20=CO%E2%82%82&Accounting%20=Production-based&Fuel%20=Total&Count%20=Per%20country&Relative%20to%20world%20total%20=
+# FORECAST => Sources: U.S. Energy Information Administration (EIA), World Energy Projection System Plus (2019), run r_190808_161601, and
+
 data = pd.read_csv('data.csv')
 data.head
 
