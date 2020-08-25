@@ -101,6 +101,7 @@ void glitch() {
 
 void soundManipolation() {
   if(abs(fv - nextfv) > 0) {
+    print(fv + ", ");
     fv += (nextfv - fv) / 40;
     lowPass.freq(fv);
   } else {
