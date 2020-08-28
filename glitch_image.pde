@@ -24,6 +24,7 @@ void setup() {
   background(255);
   colorMode(HSB);
   
+  img = loadImage("forest0.jpg");
   image(img, 0, 0);
   
   loadData();
@@ -60,16 +61,21 @@ void draw() {
       
   }
 
-  soundManipolation(); 
+  //soundManipolation(); 
   glitch();
 
   
 }
 
 void loadNextImage() {
-  img = loadImage("forest_2.jpg");
-  image(img, 0, 0);
-  loadedImage++;
+   loadedImage++;
+  if(loadedImage <= NPHOTOS - 1) {
+    img = loadImage("forest"+loadedImage+".jpg");
+    image(img, 0, 0);
+  } else {
+    exit();
+  }
+  
 }
 
 void glitch() {
