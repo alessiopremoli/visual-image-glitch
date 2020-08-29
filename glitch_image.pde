@@ -17,7 +17,7 @@ boolean finished = false;
 FloatList dataPerYear = new FloatList();
 StringList years = new StringList();
 int startData, lastData = 0;
-int delay = 200;
+int delay = 375;
 int startMillis = 0;
 
 void setup() {
@@ -48,9 +48,14 @@ void setup() {
 }
 
 void draw() {
+  if(startData == 0) {
+    delay(4000);
+    saveFrame("output/image-"+str(loadedImage)+"-"+str(4000) + "-######.png");
+  }
+  
   if (startData == lastData) {
-      saveFrame("output/image-"+str(loadedImage)+"-"+str(2000 - delay) + "-######.png");
-      delay(2000);
+      saveFrame("output/image-"+str(loadedImage)+"-"+str(4000 - delay) + "-######.png");
+      delay(4000);
       loadNextImage();
       startData = 0;
       bv = 0;
@@ -59,11 +64,10 @@ void draw() {
       nextfv = 100.0;
       ASDFreset();
       
+  } else {
+    glitch();
+    soundManipolation(); 
   }
-
-  //soundManipolation(); 
-  glitch();
-
   
 }
 
