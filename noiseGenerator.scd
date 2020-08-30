@@ -16,7 +16,7 @@ r = Routine({
 
 	s.record;
 	(
-		Synth(\myNoise, [\startFreq, 0, \endFreq, 100, \dur, 4]);
+		Synth(\myNoise, [\startFreq, 30, \endFreq, 100, \dur, 4]);
 		4.yield;
 	);
 	freqs.do({arg item, i;
