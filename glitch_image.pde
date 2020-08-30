@@ -17,7 +17,7 @@ boolean finished = false;
 FloatList dataPerYear = new FloatList();
 StringList years = new StringList();
 int startData, lastData = 0;
-int delay = 375;
+int delay = 275;
 int startMillis = 0;
 
 void setup() {
@@ -66,7 +66,7 @@ void draw() {
       
   } else {
     glitch();
-    soundManipolation(); 
+    //soundManipolation(); 
   }
   
 }

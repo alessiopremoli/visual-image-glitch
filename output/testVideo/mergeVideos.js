@@ -9,6 +9,7 @@ const progressBar = (value, total) => {
 }
 
 // 1 - get all files
+let tick = new Date();
 process.stdout.write('\033c');
 console.log('#### MERGING A LOT OF IMAGES INTO A SET OF MP4 ####');
 console.log('Getting all files...');
@@ -32,7 +33,8 @@ console.log(`Found ${batches.length} batches`)
 
 batches.forEach(batch => {
     console.log(`\nRunning batch n° ${batch}`);
-    let filesToElab = files.filter(f => f.batch === batch).sort((a, b) => a.duration - b.duration)
+    let filesToElab = files.filter(f => f.batch === batch).sort((a, b) => a.item - b.item || b.duration - a.duration)
+
     // 2 - for each file generate an mp4 video using ffmpeg
     console.log(`Batch ${batch}: 1 - For each file generate an mp4 video using ffmpeg`);
 
@@ -60,7 +62,10 @@ batches.forEach(batch => {
     filesToElab.forEach(imgFile => {
         fs.unlinkSync(imgFile.fileName + '.mp4')
     })
-})
+});
+
+let tock = new Date();
+console.log(`Process ended in ${(tock - tick) / 1000}s`);
 
 
 
