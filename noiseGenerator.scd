@@ -16,14 +16,14 @@ r = Routine({
 
 	s.record;
 	(
-		Synth(\myNoise, [\startFreq, 30, \endFreq, 100, \dur, 4]);
+		Synth(\myNoise, [\startFreq, 30, \endFreq, 100, \dur, 4 / 2]);
 		4.yield;
 	);
 	freqs.do({arg item, i;
 		var dur;
-		if( item == 4000, { dur = 4 }, { dur = 0.275 });
-		[i, dur].postln;
-		Synth(\myNoise, [\startFreq, item, \endFreq, freqs2.at( i + 1 ), \dur, dur]);
+		if( item == 4000, { dur = 4 }, { dur = 0.275 / 2 });
+		[i, dur / 2].postln;
+		Synth(\myNoise, [\startFreq, item, \endFreq, freqs2.at( i + 1 ), \dur, dur / 2]);
 		dur.yield
 	});
 	"done".postln;

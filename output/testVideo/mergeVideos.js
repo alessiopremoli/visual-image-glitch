@@ -1,6 +1,8 @@
 const fs = require('fs');
 const { execSync } = require('child_process');
 
+const divider = 2;
+
 const progressBar = (value, total) => {
     let progress = '#'.repeat(value + 1) + '-'.repeat(total - 1 - value);
     process.stdout.clearLine();
@@ -21,7 +23,7 @@ fs.readdirSync('./').forEach(file => {
         files.push({
             fileName: file.replace('.png', ''),
             batch: fileSplitted[1],
-            duration: +fileSplitted[2],
+            duration: +fileSplitted[2] / divider,
             item: fileSplitted[3].split('.')[0],
             type: fileSplitted[3].split('.')[1],
         })
