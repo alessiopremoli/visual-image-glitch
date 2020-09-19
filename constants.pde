@@ -3,7 +3,7 @@ import processing.sound.*;
 final float DIVIDER = 10000000;
 final int maxBv = -10000000;
 final int minBv = -17000000;
-final boolean big = false;
+final boolean big = true;
 final int MAX_FREQ = 4000;
 final int NPHOTOS = 4;
 

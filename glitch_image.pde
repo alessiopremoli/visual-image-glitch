@@ -19,12 +19,17 @@ StringList years = new StringList();
 int startData, lastData = 0;
 int delay = 275;
 int startMillis = 0;
+PFont slimJoe;
 
 void setup() {
   background(255);
   colorMode(HSB);
   
-  img = loadImage("forest0.jpg");
+  // FONT
+  slimJoe = createFont("Slim Joe", 32);
+  textFont(slimJoe);
+  
+  img = loadImage("forest0.png");
   image(img, 0, 0);
   
   loadData();
@@ -38,6 +43,9 @@ void setup() {
     years.append(year);
     lastData++;
   }
+  
+  int firstDate = int(years.get(startData));
+  addText(str(firstDate));
   
   noise = new WhiteNoise(this);
   lowPass = new LowPass(this);
@@ -74,8 +82,10 @@ void draw() {
 void loadNextImage() {
    loadedImage++;
   if(loadedImage <= NPHOTOS - 1) {
-    img = loadImage("forest"+loadedImage+".jpg");
+    img = loadImage("forest"+loadedImage+".png");
     image(img, 0, 0);
+    int firstDate = int(years.get(0));
+    addText(str(firstDate));
   } else {
     exit();
   }
@@ -136,9 +146,10 @@ void getMaxMinFromData() {
 }
 
 void addText(String text) {
-  fill(130);
+  fill(255);
   textSize(100);
-  text(text, width - 256 - 32, height - 32);
+  textAlign(LEFT, TOP);
+  text(text, 32, 32);
 }
 
 void desaturate(float param) {
